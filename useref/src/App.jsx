@@ -18,15 +18,15 @@ function App() {
     // </div>
 
     // for Search with debounce
-    // <div>
-    //   <Search />
-    // </div>
+    <div>
+      <Search />
+    </div>
     
 
     // for useprevious custom hook
     // <Previous />
 
-    <Timer />
+    // <Timer />
 
   
     

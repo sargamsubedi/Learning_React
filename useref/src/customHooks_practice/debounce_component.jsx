@@ -1,26 +1,24 @@
 import { useEffect, useState } from "react";
 import useDebounce from "./useDebounce";
 
-function Search()
-{
-    const[input,setInput]=useState("gam");
+function Search() {
+  const [query, setQuery] = useState("hello");
 
-    const value = useDebounce(input);
+  const debouncedQuery = useDebounce(query,1000);
 
-    // useEffect(()=>{
-    //     console.log(value);
-    // },[value])
+  useEffect(() => {
+        //    alert(debouncedQuery);
 
-    return(
+           console.log(debouncedQuery);
+           
 
-        <div>
-            <h1>
-                {value}
-                {/* {input} */}
-                </h1>
-                <input type="text" id="test" onChange={(e)=>setInput(e.target.value)}/>
-        </div>
-    )
+  }, [debouncedQuery]);
 
+  return (
+    <input
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+    />
+  );
 }
-export default Search
+export default Search;

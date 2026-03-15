@@ -1,11 +1,19 @@
-import { useDebugValue, useRef } from "react";
+import {  useEffect, useRef, useState } from "react";
 
-function useDebounce(value)
+function useDebounce(value,delay)
 {
-    const searchRef= useRef(value);
+    const [search, setSearch]= useState(value);
+
+useEffect(()=>{
+    const timer= setTimeout(()=>{
+        setSearch(value);
+
+    },delay);
+    return () => clearTimeout(timer);
+}, [value,delay]);
 
 
-    return searchRef.current;
+        return search;
 
 }
 
