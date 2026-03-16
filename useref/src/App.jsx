@@ -2,11 +2,10 @@ import Search from "./customHooks_practice/debounce_component"
 import useCounter from "./customHooks_practice/useCounter"
 import Previous from "./customHooks_practice/useprevious_component"
 import Timer from "./test"
+import Memorization from "./customHooks_practice/memo"
 
 function App() {
   // const [count, increment, decrement, reset] = useCounter(10)
-  
-
 
   return (
     // for useCounter
@@ -18,9 +17,9 @@ function App() {
     // </div>
 
     // for Search with debounce
-    <div>
-      <Search />
-    </div>
+    // <div>
+    //   <Search />
+    // </div>
     
 
     // for useprevious custom hook
@@ -29,7 +28,10 @@ function App() {
     // <Timer />
 
   
-    
+    // for usememo 
+    <div>
+      <Memorization />
+    </div>
   )
 }
 
