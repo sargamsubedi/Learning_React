@@ -15,13 +15,13 @@ const Child = React.memo(function Child({ onClick }) {
 });
 
 
-function App() {
+function Call_back() {
   const [count, setCount] = useState(0);
   const [text, setText] = useState("");
 
 const memorizedHandleClick = useCallback(() => {
     setCount(prev=> prev+1);
-  },[]);
+  },[count]);
  
 
 
@@ -38,3 +38,4 @@ const memorizedHandleClick = useCallback(() => {
     </>
   );
 }
+export default Call_back;

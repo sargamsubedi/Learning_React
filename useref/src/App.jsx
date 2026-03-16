@@ -3,6 +3,7 @@ import useCounter from "./customHooks_practice/useCounter"
 import Previous from "./customHooks_practice/useprevious_component"
 import Timer from "./test"
 import Memorization from "./customHooks_practice/memo"
+import Call_back from "./customHooks_practice/callback"
 
 function App() {
   // const [count, increment, decrement, reset] = useCounter(10)
@@ -29,9 +30,11 @@ function App() {
 
   
     // for usememo 
-    <div>
-      <Memorization />
-    </div>
+   
+      // <Memorization />
+    
+    // for usecallback
+    <Call_back />
   )
 }
 
