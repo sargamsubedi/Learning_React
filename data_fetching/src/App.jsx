@@ -1,17 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+
+import Test_data from './components/check'
+import Display from './components/display_data'
+import Fetch_data from './components/useFetch'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       
     <h1>Starting with fetch </h1>
+    {/* <Fetch_data /> */}
+    <Display />
     </>
+    // <Test_data />
   )
 }
 
