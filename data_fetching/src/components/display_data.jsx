@@ -7,7 +7,6 @@ function Display()
 
     if(loading) return(
     <div>
-    {/* <button onClick={fetch_data}>Reload</button> */}
     <p>Data is loading ... please wait </p>
     </div>
 

@@ -1,6 +1,7 @@
 
 import Test_data from './components/check'
 import Display from './components/display_data'
+import Display2 from './components/fetchUsingAsync/display2'
 import Fetch_data from './components/useFetch'
 
 function App() {
@@ -9,10 +10,13 @@ function App() {
     <>
       
     <h1>Starting with fetch </h1>
-    {/* <Fetch_data /> */}
-    <Display />
+    {/* <Display /> */}
+
+    <Display2 />
+
     </>
     // <Test_data />
+
   )
 }
 
