@@ -17,13 +17,17 @@ function useFetch2()
 
             const res = await  fetch("https://jsonplaceholder.typicode.com/posts");
             const result= await res.json();
+            setTimeout(()=>{ // simulate loading time
             setData(result);
-            setLoading(false);
+                setLoading(false);
+
+            },2000)
         }
         catch
         {
-            setError(true);
-             setLoading(false);
+            setError(true); 
+            setLoading(false);
+
         }
 
     }

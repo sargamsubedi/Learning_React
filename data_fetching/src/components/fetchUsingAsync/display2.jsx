@@ -6,12 +6,7 @@ function Display2()
 {
     const {data,loading,error,fetchData2} =useFetch2();
 
-    if(loading) return(
-    <div>
-    <p>Data is loading ... please wait </p>
-    </div>
-
-)
+ 
 
     if(error)  return(
     <div>
@@ -23,7 +18,7 @@ function Display2()
 
     return(
         <div>
-            <button onClick={fetchData2}>Reload</button>
+            <button onClick={fetchData2} disabled={loading}>{loading?"Reloading... ":"reload"}</button>
        {data.map((user) => (
         <p key={user.id}>
           {user.id} {user.title}
