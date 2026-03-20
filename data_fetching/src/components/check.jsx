@@ -1,41 +1,44 @@
 import { useEffect, useState } from "react";
+// import useFetch2 from "./useFetch2";
 
-function Check_data() {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsloading] = useState(true);
-  const [isError, setIserror] = useState(false);
 
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then(res => res.json())
-      .then(data => {
-        setData(data.slice(0, 5)); // ✅ first 5 posts
-        setIsloading(false);
-      })
-      .catch(() => {
-        setIserror(true);
-        setIsloading(false);
-      });
-  }, []);
+function Search(value,delay=500)
+{
+    const [filteredData,setFilteredData]=useState([]);
+    const {data,loading,error,fetchData2} =useFetch2();
 
-  if (isError) {
-    return <p>Something went wrong</p>;
-  }
+    const [filterData , setfilterData] =useState(false)
 
-  if (isLoading) {
-    return <p>Data is loading... please wait</p>;
-  }
 
-  return (
-    <>
-      <h1>Details</h1>
-      {data.map((user) => (
-        <p key={user.id}>
-          {user.id} {user.title}
-        </p>
-      ))}
-    </>
-  );
+    function filterDataFun()
+    {
+       const fildata=( data.filter((item) =>
+            item.title.toLowerCase().includes(debouncedSearch.toLowerCase())
+        ))
+        setFilteredData(fildata);
+    }    
+   
+    useEffect(()=>{
+        if(value==null) 
+            {
+                setfilterData(false);
+                return;
+            }
+
+        const time= setTimeout(() => {
+            
+            filterData(true);
+            filterDataFun();
+
+        }, delay);
+
+        return clearTimeout(time);
+    },[value,delay])
+
+if(!filterData)  return {data,loading,error,fetchData2};
+
+    return {filteredData,loading,error,fetchData2};
+
 }
 
-export default Check_data;
+export default Search;
