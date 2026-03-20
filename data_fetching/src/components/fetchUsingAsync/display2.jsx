@@ -36,6 +36,10 @@ function Display2()
           {user.id} {user.title}
         </p>
       ))}
+
+      {
+        !loading && filteredData.length===0 && <p>No results found</p>
+      }
       </div>
     )
 }
