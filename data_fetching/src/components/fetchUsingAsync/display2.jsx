@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useDebounce from "./Debounce";
+import useDebounce from "./useDebounce";
 import useFetch2 from "./useFetch2";
 
 
