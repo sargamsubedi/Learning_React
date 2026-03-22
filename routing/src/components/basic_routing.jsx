@@ -42,7 +42,14 @@ function PostDetails()
     function Home()
     {
         return(
-            <h1>this is home </h1>
+            <div>
+           {posts.map(p=> {return(
+            <div key={p.id}>
+            <Link to={`/post/${p.id}`}> {p.title}</Link>
+            <br />
+            </div>
+           )})}
+           </div>
         )
     }
     function About()
@@ -58,6 +65,11 @@ function PostDetails()
         )
     }
 
+    function Footer() {
+    return (
+        <h1>This is footer</h1>
+    )
+}
 function BasicRouting()
 {   
 
@@ -65,19 +77,15 @@ function BasicRouting()
     return(
         <div>
             <h1>basic routing</h1>
+        <nav>
 
+        
            <Link to="/" >home</Link>
            <br />
            <Link to="/about">About</Link>
            <br />
            <Link to="/contact">Contact</Link>
-
-           {posts.map(p=> {return(
-            <div key={p.id}>
-            <Link to={`/post/ ${p.id}`}> {p.title}</Link>
-            <br />
-            </div>
-           )})}
+        </nav>
 
            <Routes>
             <Route path="/"  element={<Home />}/>
@@ -87,6 +95,8 @@ function BasicRouting()
             <Route path="/post/:id" element={<PostDetails />} />
            </Routes>
 
+
+        <Footer />
         </div>
     )
 }

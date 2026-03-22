@@ -1,6 +1,8 @@
 
 import { BrowserRouter } from "react-router-dom";
 import BasicRouting from "./components/basic_routing";
+import Structure from "./components/Structure";
+import NestedRouting from "./components/nested_routing";
 
 function App() {
   
@@ -8,8 +10,11 @@ function App() {
     <BrowserRouter>
     
       <h1>learning Routing</h1>
-      <BasicRouting />
+      {/* <BasicRouting /> */}
  
+    {/* <Structure /> */}
+
+    <NestedRouting />
     </BrowserRouter>
   )
 }
