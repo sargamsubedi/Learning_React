@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import BasicRouting from "./components/basic_routing";
 import Structure from "./components/Structure";
 import NestedRouting from "./components/nested_routing";
+import Exercise1 from "./components/exercise1";
 
 function App() {
   
@@ -14,7 +15,9 @@ function App() {
  
     {/* <Structure /> */}
 
-    <NestedRouting />
+    {/* <NestedRouting /> */}
+
+    <Exercise1 />
     </BrowserRouter>
   )
 }
