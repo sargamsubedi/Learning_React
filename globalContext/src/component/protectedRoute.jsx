@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 
 const AuthContext = React.createContext();
@@ -17,21 +17,25 @@ function Dashboard() {
 
 
 function Protected() {
-    const { isloggedin } = useContext(AuthContext);
+    const { isLoggedIn } = useContext(AuthContext);
 
-    if (!isloggedin) return <Navigate to="/" />
+    if (!isLoggedIn) return <Navigate to="/" />
 
     return <Dashboard />
 }
 function RouteDefiner() {
-    const [isloggedin, setisLoggedin] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(()=>{localStorage.getItem("auth")==="true"})
+
+    useEffect(()=>{
+        localStorage.setItem("auth",isLoggedIn);
+    },[isLoggedIn])
 
     return (
         <>
-            <AuthContext.Provider value={{ isloggedin, setisLoggedin }}>
+            <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
                 <button onClick={() => {
-                    setisLoggedin(!isloggedin)
-                }}>{isloggedin ? "log out" : "logn in"}</button>
+                    setIsLoggedIn(prev=>!prev)
+                }}>{isLoggedIn ? "logout" : "login"}</button>
 
                 <NavLink to="/dashboard">see dashboard</NavLink>
 
