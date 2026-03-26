@@ -27,7 +27,14 @@ function RouteDefiner() {
     const [isLoggedIn, setIsLoggedIn] = useState(()=>{localStorage.getItem("auth")==="true"})
 
     useEffect(()=>{
-        localStorage.setItem("auth",isLoggedIn);
+        if(isLoggedIn)
+        {
+
+            localStorage.setItem("auth",isLoggedIn);
+        }
+        else{
+            localStorage.removeItem("auth");
+        }
     },[isLoggedIn])
 
     return (
