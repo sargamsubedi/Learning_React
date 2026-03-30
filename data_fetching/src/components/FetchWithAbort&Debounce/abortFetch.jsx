@@ -14,7 +14,8 @@ function useFetchAndAbort(input,reload) {
       
       try {
         setError(false);
-        setLoading(true)
+        setLoading(true);
+        await new Promise(res => setTimeout(res, 2000));
         const url = input? `https://jsonplaceholder.typicode.com/posts?q=${input}` : `https://jsonplaceholder.typicode.com/posts`
         const res = await fetch(url,
           { signal: controller.signal }
