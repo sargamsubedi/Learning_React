@@ -1,43 +1,47 @@
 import { useEffect, useState } from "react";
 
-function FetchAndAbort() {
-    const [input, setInput] = useState("");
-useEffect(() => {
-  const controller = new AbortController();
+function useFetchAndAbort(input,reload) {
+  const [data,setData] =useState([]);
+  const [error,setError] =useState(false);
 
-  const fetchData = async () => {
-    try {
-      await new Promise(res => setTimeout(res, 2000)); // simulation of delay
 
-      const res = await fetch("https://jsonplaceholder.typicode.com/posts",
-        { signal: controller.signal }
-      );    
+  useEffect(() => {
+    
+    const controller = new AbortController();
+    
+    async function fetchData(){
+      
+      try {
+        setError(false);
+        await new Promise(res => setTimeout(res, 2000)); // simulation of delay
 
-      const data = await res.json();
-      console.log("DATA:", data);
+        const res = await fetch(`https://jsonplaceholder.typicode.com/posts?q=${input}`,
+          { signal: controller.signal }
+        );
 
-    } catch (err) {
-      if (err.name === "AbortError") {
-        console.log(" request aborted");
-      } else {
-        console.log("error occurs");
+        const data = await res.json();
+        setData(data);
+
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log(" request aborted");
+        } else {
+          console.log("error occurs");
+          setError(true);
+        }
       }
     }
-  };
 
-  fetchData();
+    fetchData();
 
-  return () => {
-    controller.abort();
-  };
-}, [input]);
+    return () => {
+      controller.abort();
+    };
+  }, [input,reload]);
 
 
-    return (
-        <>
-            <input type="text" onChange={(e) => { setInput(e.target.value) }} />
-        </>
-    )
+  return {data,error}
+
 }
 
-export default FetchAndAbort;
+export default useFetchAndAbort;
