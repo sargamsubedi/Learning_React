@@ -2,43 +2,45 @@ import { useEffect, useState } from "react";
 import useDebounce from "../fetchUsingAsync/useDebounce";
 import useFetchAndAbort from "./abortFetch";
 
-function DisplayForFetchWithAbortAndDebounce()
-{
-  const [reload,setReload] = useState(0);
-  const [input,setInput] = useState("");
+function DisplayForFetchWithAbortAndDebounce() {
+  const [reload, setReload] = useState(0);
+  const [input, setInput] = useState("");
   const debouncevalue = useDebounce(input, 500)
-  const {data,error} =useFetchAndAbort(debouncevalue, reload);
+  const { data, error, loading } = useFetchAndAbort(debouncevalue, reload);
 
 
 
 
-    if(error)  return(
+  if (error) return (
     <div>
-    <button 
-    onClick={()=>{setReload(prev=>prev+1)}} // to recall the api with same input
-    >Reload</button>
-  <p>Can't fetch data , an error occurred  </p>
+      <button
+        onClick={() => { setReload(prev => prev + 1) }} // to recall the api with same input
+      >Reload</button>
+      <p>Can't fetch data , an error occurred  </p>
     </div>
+  )
 
-)
+  if(loading)
+  {
+    return <h1>Data is loading , please wait</h1>
+  }
+  return (
+    <div>
+      <input type="text" value={input} onChange={(e) => { setInput(e.target.value) }} />
 
-    return(
-        <div>
-          <input type="text" value={input} onChange={(e)=>{setInput(e.target.value)}}/>
-
-            <button
-             onClick={()=>{setReload(prev=>prev+1)}} 
-             >reload</button>
-       {data.map((user) => (
+      <button
+        onClick={() => { setReload(prev => prev + 1) }}
+      >reload</button>
+      {data.map((user) => (
         <p key={user.id}>
           {user.id} {user.title}
         </p>
       ))}
 
       {
-        data.length===0 && <p>No results found</p>
+       !loading && data.length === 0 && <p>No results found</p>
       }
-      </div>
-    )
+    </div>
+  )
 }
 export default DisplayForFetchWithAbortAndDebounce;
