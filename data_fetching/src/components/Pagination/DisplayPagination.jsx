@@ -27,7 +27,7 @@ function DisplayPagination() {
             </button>
 
             {data.map((user) => (
-                <p key={crypto.randomUUID()}>
+                <p key={user.id}>
                     {user.id} {user.title}
                 </p>
             ))}
