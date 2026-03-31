@@ -4,6 +4,7 @@ function useFetchPagination(Limit = 5, LoadMore) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [moreDataAvailable, setMoreDataAvailable] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
@@ -13,6 +14,12 @@ function useFetchPagination(Limit = 5, LoadMore) {
 
                 const res = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${Limit}&_page=${LoadMore}`);
                 const result = await res.json();
+                console.log(result);
+                
+                if(!result.length)
+                {
+                    setMoreDataAvailable(false);
+                }
                 setData(prev => [...prev, ...result]);
             }
             catch {
@@ -30,7 +37,7 @@ function useFetchPagination(Limit = 5, LoadMore) {
         fetchData();
     }, [Limit, LoadMore])
 
-    return { data, loading, error };
+    return { data, loading, error, moreDataAvailable};
 }
 
 export default useFetchPagination;
