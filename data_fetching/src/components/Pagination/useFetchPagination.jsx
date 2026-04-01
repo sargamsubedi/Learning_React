@@ -5,12 +5,11 @@ function useFetchPagination(Limit = 5, page) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [moreDataAvailable, setMoreDataAvailable] = useState(true);
-    const hasFetched =useRef(false) // to handle strictmode double mount in initial phase
+    const hasFetched = useRef(false) // to handle strictmode double mount in initial phase
 
     useEffect(() => {
         async function fetchData() {
 
-            
             try {
                 setLoading(true);
                 setError(false);
@@ -34,10 +33,10 @@ function useFetchPagination(Limit = 5, page) {
 
         }
 
- // to handle strictmode double mount in initial phase
-        if(hasFetched.current && page===1) return
+        // to handle strictmode double mount in initial phase
+        if (hasFetched.current && page === 1) return
         fetchData();
-        if(page===1) hasFetched.current=true;
+        if (page === 1) hasFetched.current = true;
     }, [Limit, page])
 
     return { data, loading, error, moreDataAvailable };
