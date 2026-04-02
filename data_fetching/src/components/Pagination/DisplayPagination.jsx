@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useFetchPagination from "./useFetchPagination";
 
 
 function DisplayPagination() {
     const [pageNo, setPageNo] = useState(1);
     const { data, loading, error, moreDataAvailable} = useFetchPagination(25, pageNo);
+    const bottomRef = useRef(null);
+
+    useEffect(()=>{
+        const observer = new IntersectionObserver((entries)=>{
+
+            if( !loading&& entries[0].isIntersecting && moreDataAvailable )
+            {
+                setPageNo(prev=> prev+1);
+            }
+        })
+
+        if(bottomRef.current)
+        {
+             observer.observe(bottomRef.current);
+        }
+
+        return ()=>{observer.disconnect()}
+    },[loading,moreDataAvailable])
+
+
     if (error) return (
         <div>
             <p>Can't fetch data , an error occurred, please refresh the page </p>
@@ -12,7 +32,7 @@ function DisplayPagination() {
 
     )
 
-    if(loading)
+    if(loading && pageNo===1)
     {
         return(
             <h1>Data is loading ... please wait</h1>
@@ -21,17 +41,25 @@ function DisplayPagination() {
 
     return (
         <div>
-            <button onClick={() => setPageNo(prev => prev + 1)} 
+            {/* <button onClick={() => setPageNo(prev => prev + 1)} 
                  disabled={loading || !moreDataAvailable}> 
                 Load More
-            </button>
+            </button> */}
+
+
+            {
+                loading && pageNo!==1 && <p>Loading more data</p>
+            }
 
             {data.map((user) => (
                 <p key={user.id}>
                     {user.id} {user.title}
                 </p>
             ))}
-
+                <div ref={bottomRef} style={{
+                    height:"10px",
+                    width:"10px",
+                }}> </div>
             {
                 !loading && data.length === 0 && <p>No results found</p>
             }
