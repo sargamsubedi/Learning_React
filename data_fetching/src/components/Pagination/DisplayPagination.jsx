@@ -21,7 +21,11 @@ function DisplayPagination() {
              observer.observe(bottomRef.current);
         }
 
-        return ()=>{observer.disconnect()}
+        return ()=>{
+                // keeping both for learning purpose (it doesnt affect code tho) , only one is sufficient for this project 
+            observer.unobserve(bottomRef.current) // it removes only bottomref.current
+            observer.disconnect() // it removes every elements in observer 
+        }
     },[loading,moreDataAvailable])
 
 
