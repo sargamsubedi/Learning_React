@@ -8,6 +8,7 @@ function DisplayPagination() {
     const bottomRef = useRef(null);
 
     useEffect(()=>{
+        const  bottom = bottomRef.current;
         const observer = new IntersectionObserver((entries)=>{
 
             if( !loading&& entries[0].isIntersecting && moreDataAvailable )
@@ -16,14 +17,14 @@ function DisplayPagination() {
             }
         })
 
-        if(bottomRef.current)
+        if(bottom)
         {
              observer.observe(bottomRef.current);
         }
 
         return ()=>{
                 // keeping both for learning purpose (it doesnt affect code tho) , only one is sufficient for this project 
-            observer.unobserve(bottomRef.current) // it removes only bottomref.current
+            if(bottom)  observer.unobserve(bottom) // it removes only bottomref.current
             observer.disconnect() // it removes every elements in observer 
         }
     },[loading,moreDataAvailable])
