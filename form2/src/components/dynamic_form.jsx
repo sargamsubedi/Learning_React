@@ -1,4 +1,5 @@
 import { useState } from "react";
+import InputField from "./input_field";
 
 function DynamicForm() {
     const fields = [
@@ -39,13 +40,13 @@ function DynamicForm() {
             <form onSubmit={handleSubmit}>
                 {
                     fields.map((item, index) => (
-                        <div key={index}>
+                        <div key={item.name}>
                             <label>{item.name}: </label>
-                            <input type="text"
+                            <InputField
                                 name={item.name}
                                 placeholder={item.placeholder}
                                 value={formData[item.name]}
-                                onChange={(e) => handleChange(e)}
+                                onChange={handleChange}
                             />
                         </div>
                     ))
