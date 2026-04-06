@@ -1,5 +1,6 @@
 import { useState } from "react";
 import InputField from "./input_field";
+import useForm from "../customHooks/useForm";
 
 function DynamicForm() {
     const fields = [
@@ -7,37 +8,17 @@ function DynamicForm() {
         { name: "email", placeholder: "Enter your email" }
     ];
 
-    const [formData, setFormData] = useState({ name: "", email: "" })
-    const [error, setError] = useState("");
-
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    }
-
-    function handleSubmit(e) {
-
-        e.preventDefault();
-        setError("");
-
-        if (!formData.name.trim() || !formData.email.trim()) {
-            setError("please fill all fields");
-            return
-        }
-        if (!formData.email.includes("@")) {
-            setError("Invalid email");
-            return;
-        }
+    const { formData, handleChange ,handleSubmit, error } = useForm({ name: "", email: "" })
 
 
-        alert(`your name is ${formData.name}
-             your email is ${formData.email}`);
-        setFormData({ name: "", email: "" });
-    }
+
+    
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit((data)=>{
+                alert(JSON.stringify(data))
+            })}>
                 {
                     fields.map((item, index) => (
                         <div key={item.name}>
