@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-function useForm(initialValue) {
+function useForm(initialValue, fields) {
     const [formData, setFormData] = useState(initialValue);
     const [error, setError] = useState("");
 
@@ -13,24 +13,32 @@ function useForm(initialValue) {
 
 
     function handleSubmit(callback) {
-        return function(e){
+        return function (e) {
 
             e.preventDefault();
             setError("");
-            
-            if (!formData.name.trim() || !formData.email.trim()) {
-                setError("please fill all fields");
-                return
+
+            for (const field of fields) {
+                const value= formData[field.name];
+
+                if(field.required && !value.trim())
+                {
+                    setError(`${field.name} is required`);
+                    return;
+                }
+
+                if(field.validate && !field.validate(value))
+                {
+                    setError(field.errorMessage);
+                    return;
+                }
+
             }
-            if (!formData.email.includes("@")) {
-                setError("Invalid email");
-                return;
-            }
-            
-        callback(formData);
+
+            callback(formData);
         }
     }
-    return { formData, handleChange ,handleSubmit, error };
+    return { formData, handleChange, handleSubmit, error };
 }
 
 export default useForm;
