@@ -35,8 +35,8 @@ function useForm(initialValue, fields) {
 
             }
 
-            callback(formData);
         }
+        callback(formData);
     }
     return { formData, handleChange, handleSubmit, error };
 }
