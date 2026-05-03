@@ -46,42 +46,35 @@ function Display() {
             }
 
         }
-        console.log(data);
-        
-    }, [data,page])
+
+    }, [data, page])
 
     // effect for infinite scroll.. 
-    useEffect(()=>{
+    useEffect(() => {
 
-        const observer = new IntersectionObserver((entries)=>{
-            
-            console.log("inside intersection observer");
-            
-            console.log(entries);
-            if(entries[0].isIntersecting)
-            {
-                if(!isLoading && data.length)
-                {
-                    setPage(prev=>prev+1);
+        const observer = new IntersectionObserver((entries) => {
+
+            if (entries[0].isIntersecting) {
+                if (!isLoading && data.length) {
+                    setPage(prev => prev + 1);
 
                 }
             }
-            
+
 
         })
 
-        if(bottomRef.current)
-        {
+        if (bottomRef.current) {
             observer.observe(bottomRef.current);
         }
 
-        return ()=>{
+        return () => {
             observer.disconnect();
         }
 
-    },[isLoading,data])// to remove the stale closure values
+    }, [isLoading, data])// to remove the stale closure values
 
-    if (isLoading && page===1) return <p>data is loading please wait....</p>
+    if (isLoading && page === 1) return <p>data is loading please wait....</p>
     if (error) return <p>error occurred</p>
 
 
@@ -90,9 +83,9 @@ function Display() {
         <>
             <h1>this is display component</h1>
 
-        <h1>{page}</h1>
+            <h1>{page}</h1>
             <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
-            <button onClick={() => setPage(prev => prev + 1)}>Load More</button>
+
             {
                 isLoading && <p>Loading...</p>
             }
@@ -108,14 +101,14 @@ function Display() {
             </div>
 
             {
-               !isLoading && !data.length && <strong> you have reached the end   </strong>
+                !isLoading && !data.length && <strong> you have reached the end   </strong>
 
             }
 
             {/* this is the bottom which helps to load more data... */}
             <div ref={bottomRef} style={{
                 height: 100,
-                width:100
+                width: 100
             }}></div>
         </>
 
