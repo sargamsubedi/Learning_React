@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useDebounce from "./hooks/useDebounce";
 
 function Display() {
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
     const [allPosts, setAllPosts] = useState([]);
+    const bottomRef = useRef(null);
 
     const debouncedSearch = useDebounce(search);
 
@@ -16,7 +17,7 @@ function Display() {
             queryFn: async () => {
                 console.log("data fetch called");
 
-                let url = search ? `https://jsonplaceholder.typicode.com/posts?q=${search}&_limit=5&_page=${page}` : `https://jsonplaceholder.typicode.com/posts?_limit=5&_page=${page}`
+                let url = search ? `https://jsonplaceholder.typicode.com/posts?q=${search}&_limit=10&_page=${page}` : `https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${page}`
 
                 const res = await fetch(url);
                 return res.json();
@@ -45,9 +46,40 @@ function Display() {
             }
 
         }
+        console.log(data);
+        
     }, [data,page])
 
+    // effect for infinite scroll.. 
+    useEffect(()=>{
 
+        const observer = new IntersectionObserver((entries)=>{
+            
+            console.log("inside intersection observer");
+            
+            console.log(entries);
+            if(entries[0].isIntersecting)
+            {
+                if(!isLoading && data.length)
+                {
+                    setPage(prev=>prev+1);
+
+                }
+            }
+            
+
+        })
+
+        if(bottomRef.current)
+        {
+            observer.observe(bottomRef.current);
+        }
+
+        return ()=>{
+            observer.disconnect();
+        }
+
+    },[isLoading,data])// to remove the stale closure values
 
     if (isLoading && page===1) return <p>data is loading please wait....</p>
     if (error) return <p>error occurred</p>
@@ -58,7 +90,7 @@ function Display() {
         <>
             <h1>this is display component</h1>
 
-
+        <h1>{page}</h1>
             <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
             <button onClick={() => setPage(prev => prev + 1)}>Load More</button>
             {
@@ -74,6 +106,17 @@ function Display() {
                     ))
                 }
             </div>
+
+            {
+               !isLoading && !data.length && <strong> you have reached the end   </strong>
+
+            }
+
+            {/* this is the bottom which helps to load more data... */}
+            <div ref={bottomRef} style={{
+                height: 100,
+                width:100
+            }}></div>
         </>
 
     )
