@@ -1,16 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import useDebounce from "./hooks/useDebounce";
 
 function Display() {
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
     const [allPosts, setAllPosts] = useState([]);
 
+    const debouncedSearch = useDebounce(search);
 
 
     const { data, isLoading, error } = useQuery(
         {
-            queryKey: ["posts", search, page], // now the query key is different for every search so fetch data per search 
+            queryKey: ["posts", debouncedSearch, page], // now the query key is different for every search so fetch data per search 
             queryFn: async () => {
                 console.log("data fetch called");
 
@@ -29,7 +31,7 @@ function Display() {
 
     useEffect(() => {
         setPage(1);
-    }, [search])
+    }, [debouncedSearch])
 
 
     useEffect(() => {
