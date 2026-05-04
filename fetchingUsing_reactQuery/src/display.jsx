@@ -39,7 +39,9 @@ function Display() {
     //   pageParams: [...]  // This stores WHICH page was used each time , pageParams = [1, 2, 3]
     // }
 
-    const { data, isLoading, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
+
+        // isLoading is only true for first fetch only , for other pages we should use isfetchingnextpage
+    const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ["posts", debouncedSearch, page],
         queryFn: async ({ pageParam = 1 }) => {
             console.log("fetching data for page: ", { pageParam });
@@ -121,8 +123,8 @@ function Display() {
 
 
     const posts = data?.pages.flat() || [];
-    if (isLoading && page === 1) return <p>data is loading please wait....</p>
-    if (error) return <p>error occurred</p>
+    if (isLoading) return <p>data is loading please wait....</p>
+    if (error) return <p>error occurred: {error}</p>
 
 
 
@@ -134,7 +136,7 @@ function Display() {
             <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
 
             {
-                isLoading && <p>Loading...</p>
+                isFetchingNextPage   && <p>Loading...</p>
             }
 
 
