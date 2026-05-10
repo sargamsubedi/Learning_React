@@ -5,6 +5,7 @@ import AddTodo from "./AddTodo";
 function DisplayTodo() {
     const todos = useTodo((state) => state.todos);
     const toggleStatus= useTodo((state)=>state.toggleStatus);
+    const deleteTodo= useTodo((state)=>state.deleteTodo);
     console.log(todos);
     return (
         <>
@@ -19,11 +20,13 @@ function DisplayTodo() {
                        
                         
                         <div key={todo.id} 
-                        onClick={()=>toggleStatus(todo.id)}
+                            onClick={()=>toggleStatus(todo.id)}
                         >
-                            {todo.id}: 
-                            {`  ${todo.text}`}
+                            <p>
+                                {todo.id}:{`  ${todo.text}`}
+                            </p>
                             <input type="checkbox" checked={todo.status} />
+                            <button onClick={()=>deleteTodo(todo.id)}>Delete</button>
 
                         </div>
                     ))

@@ -26,6 +26,15 @@ const useTodo = create((set)=>({
             return{
                 todos: changedTodo
         }})
+    },
+    deleteTodo: (id)=>{
+        set((state)=>{
+            const changedTodo = state.todos.filter((todo)=>todo.id!=id)
+            
+            return{
+                todos: changedTodo
+            }
+        })
     }
 }))
 
