@@ -1,5 +1,4 @@
 
-// pending add togglestatus logic
 import { create } from "zustand";
 
 const useTodo = create((set)=>({
@@ -29,7 +28,7 @@ const useTodo = create((set)=>({
     },
     deleteTodo: (id)=>{
         set((state)=>{
-            const changedTodo = state.todos.filter((todo)=>todo.id!=id)
+            const changedTodo = state.todos.filter((todo)=>todo.id!==id)
             
             return{
                 todos: changedTodo

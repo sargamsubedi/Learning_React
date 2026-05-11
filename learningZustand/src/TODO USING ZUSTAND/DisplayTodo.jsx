@@ -25,8 +25,12 @@ function DisplayTodo() {
                             <p>
                                 {todo.id}:{`  ${todo.text}`}
                             </p>
-                            <input type="checkbox" checked={todo.status} />
-                            <button onClick={()=>deleteTodo(todo.id)}>Delete</button>
+                            <input type="checkbox" checked={todo.status} readOnly/>
+                            {/* e.stopPropagation() this is to prevent event bubbling 
+                            i.e when we click on delete the div is also clicked and it cause to change its status */}
+                            <button onClick={(e)=>{
+                                e.stopPropagation();
+                                deleteTodo(todo.id)}}>Delete</button>
 
                         </div>
                     ))
