@@ -1,7 +1,10 @@
 
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useTodo = create((set)=>({
+//persist stores the states in localstorage and on-refresh the data isnt lost 
+// its structure persist(storelogic, config object ) more about config object is below..
+const useTodo = create(persist((set)=>({
     
     id:0,
     todos:[],
@@ -35,6 +38,11 @@ const useTodo = create((set)=>({
             }
         })
     }
-}))
+}),
+//this is config 
+{
+    name:"todo-lists"  // defines localstorage name (check on inspect-application-localstorage-localhost)
+}
+))
 
 export default useTodo;
