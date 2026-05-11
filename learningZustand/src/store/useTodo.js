@@ -41,7 +41,19 @@ const useTodo = create(persist((set)=>({
 }),
 //this is config 
 {
-    name:"todo-lists"  // defines localstorage name (check on inspect-application-localstorage-localhost)
+    name:"todo-lists",  // defines localstorage name (check on inspect-application-localstorage-localhost)
+
+    // storage: sessionStorage, // by default its localStorage , sessionStorage erases on tab close so used to store temporary data
+
+    // partialize: (state)=>({ //persist only todos not id by default all data is persisted
+    //     todos: state.todos
+    // }),
+
+    // onRehydrateStorage: ()=>( // runs when data is restored into store from storage
+    //     console.log("data restored")
+    // ),
+
+    // version: 1, // we change this when our store schema changes (i.e now it has only todo and id in future it might have tags in it so the persisted data doesnt match the dataStructure of our store in that case we change version whenever there is schema(store dataStructure) change )
 }
 ))
 
