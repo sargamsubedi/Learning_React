@@ -1,17 +1,53 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
     name:"user",
     initialState:{
         name:"Guest",
-        isLoggedIn:false
+        isLoggedIn:false,
+        loading:false,
+        error:null
     },
     reducers:{
         logIn:(state,action)=>{
             state.name=action.payload
             state.isLoggedIn=true
         }
+    },
+    extraReducers:(builder)=>{
+        builder.addCase(fetchUser.fulfilled,(state,action)=> {
+            console.log(action.payload);
+            
+            state.name= action.payload.name
+            state.loading=false
+        })
+
+        builder.addCase(fetchUser.pending,(state)=>{
+            state.loading=true
+            state.error=null
+        })
+
+        builder.addCase(fetchUser.rejected,(state,action)=>{
+                state.error=action.error.message
+                state.loading= false
+        })
+
     }
 })
+
+export const fetchUser = createAsyncThunk(
+    "user/fetchUser" , //this means in user slice fetchUser function , just a naming convention could be anyting like abc.
+
+    async (userId)=>{
+        const res =await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+
+        if(!res.ok)
+        {
+            throw new Error("sorry couldn't fetch the user data")
+        }
+        return await res.json();
+    }
+)
+
 export default userSlice.reducer
 export const {logIn} = userSlice.actions
