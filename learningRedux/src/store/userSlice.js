@@ -28,7 +28,13 @@ const userSlice = createSlice({
         })
 
         builder.addCase(fetchUser.rejected,(state,action)=>{
-                state.error=action.error.message
+
+                // for error thrown using throw
+                // state.error=action.error.message
+
+                // for using thunkAPI's rejectWithValue
+                state.error= action.payload
+                
                 state.loading= false
         })
 
@@ -38,12 +44,15 @@ const userSlice = createSlice({
 export const fetchUser = createAsyncThunk(
     "user/fetchUser" , //this means in user slice fetchUser function , just a naming convention could be anyting like abc.
 
-    async (userId)=>{
+    async (userId,thunkAPI)=>{
         const res =await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
 
         if(!res.ok)
-        {
-            throw new Error("sorry couldn't fetch the user data")
+        {   
+            // by this method the error message goes to the action.error.message
+            // throw new Error("sorry couldn't fetch the user data")
+
+            return thunkAPI.rejectWithValue("sorry user not found!")
         }
         return await res.json();
     }
