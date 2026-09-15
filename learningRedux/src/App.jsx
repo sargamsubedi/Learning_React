@@ -1,13 +1,16 @@
 
 import './App.css'
-import Counter from './Counter'
+import Counter from './components/Counter'
+import User from './components/User'
 
 function App() {
 
   return (
     <div>
       learning redux toolkit
-      <Counter />
+      {/* <Counter /> */}
+
+      <User />
     </div>
   )
 }

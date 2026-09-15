@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeName, increase, increaseBy } from './store/counterSlice';
+import { changeName, increase, increaseBy } from '../store/counterSlice';
 
 export default function Counter() {
     const {count,name} = useSelector(state => state.counter)
