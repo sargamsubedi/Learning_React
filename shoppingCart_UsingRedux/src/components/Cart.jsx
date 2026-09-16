@@ -1,4 +1,4 @@
-import {removeItem,clearCart} from '../store/cartSlice'
+import {removeItem,clearCart, increaseQuantity, decreaseQuantity} from '../store/cartSlice'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -17,11 +17,17 @@ export default function Cart() {
         cartItems?.map(item=>(
             <div key={item.id}>
                 <p>
-                    {item.title}
+                   title: {item.title}
                 </p>
                 <p>
-                    {item.category}
+                  category:  {item.category}
                 </p>
+                <p>
+                  quantity:  {item.quantity}
+                </p>
+                <button onClick={()=>dispatch(increaseQuantity(item.id))}>+</button>
+                <button onClick={()=>dispatch(decreaseQuantity(item.id))}>-</button>
+                
                 <button onClick={()=>dispatch(removeItem(item.id))}>Remove item</button>
             </div>
         ))

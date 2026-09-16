@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { fetchProducts } from '../store/productSlice'
-import { addItem,removeItem } from '../store/cartSlice'
+import { addItem} from '../store/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Products() {
